@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="shared_element_transition">Shared Element Transition</string>
+</resources>
