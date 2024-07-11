@@ -1,0 +1,49 @@
+package com.jetpack.sharedelement.ui
+
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import com.jetpack.sharedelement.navigation.Screens
+import com.jetpack.sharedelement.ui.transition.TransitionsScreen
+import com.jetpack.sharedelement.ui.transition.with.navigation.TransitionWithNavigationScreen
+import com.jetpack.sharedelement.ui.transition.without.navigation.TransitionWithoutNavigationScreen
+
+@Composable
+fun MainScreen(
+    modifier: Modifier = Modifier,
+    navController: NavHostController
+) {
+    NavHost(
+        modifier = modifier,
+        navController = navController,
+        startDestination = Screens.TransitionListScreen.route
+    ) {
+        composable(Screens.TransitionListScreen.route) {
+           TransitionsScreen(
+               modifier = Modifier.fillMaxSize(),
+               navigateTo = { screen ->
+                   navController.navigate(screen)
+               }
+            )
+        }
+        composable(Screens.TransitionWithNavigationScreen.route) {
+            TransitionWithNavigationScreen(
+                modifier = Modifier.fillMaxSize(),
+                onBack = {
+                    navController.popBackStack()
+                }
+            )
+        }
+        composable(Screens.TransitionWithoutNavigationScreen.route) {
+            TransitionWithoutNavigationScreen(
+                modifier = Modifier.fillMaxSize(),
+                onBack = {
+                    navController.popBackStack()
+                }
+            )
+        }
+    }
+}
