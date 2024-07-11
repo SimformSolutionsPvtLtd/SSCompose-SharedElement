@@ -3,6 +3,7 @@ package com.jetpack.sharedelement.data
 import com.jetpack.sharedelement.model.Album
 import com.jetpack.sharedelement.model.Coffee
 import com.jetpack.sharedelement.R
+import com.jetpack.sharedelement.model.Profile
 import com.jetpack.sharedelement.model.Snack
 
 object FakeDataProvider {
@@ -139,4 +140,13 @@ object FakeDataProvider {
             Snack(name = "Gingerbread", image = R.drawable.gingerbread),
             Snack(name = "Honeycomb", image = R.drawable.honeycomb)
         )
+
+    fun getFabProfiles(): List<Profile> {
+        return listOf(
+            Profile(id = 0, name = "Lily Thea", image = R.drawable.ic_profile_image_1),
+            Profile(id = 1, name = "Lily Thea", image = R.drawable.ic_profile_image_2),
+            Profile(id = 2, name = "Lily Thea", image = R.drawable.ic_profile_image_3),
+            Profile(id = 3, name = "Lily Thea", image = R.drawable.ic_profile_image_4)
+        )
+    }
 }

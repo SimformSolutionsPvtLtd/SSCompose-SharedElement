@@ -17,7 +17,8 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -58,7 +59,7 @@ fun SharedTransitionScope.AlbumsScreen(
                     .sharedElement(
                         state = rememberSharedContentState(key = album.id),
                         animatedVisibilityScope = animatedVisibilityScope,
-                        boundsTransform = boundsTransform
+                        boundsTransform = albumBoundsTransform
                     ),
                 album = album,
                 onClick = { 
@@ -86,7 +87,7 @@ private fun AlbumItem(
         Image(
             modifier = Modifier
                 .aspectRatio(1f)
-                .clip(RoundedCornerShape(10.dp)),
+                .clip(MaterialTheme.shapes.small.copy(all = CornerSize(20.dp))),
             painter = painterResource(id = album.cover),
             contentDescription = "",
             contentScale = ContentScale.Crop,

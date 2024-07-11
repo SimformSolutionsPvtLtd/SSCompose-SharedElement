@@ -11,4 +11,10 @@
     <string name="emojis">Emojis</string>
     <string name="animated_visibility_shared_element">Animated Visibility with SET</string>
     <string name="save_changes">Save changes</string>
+    <string name="sheet_animation">Sheet Animation</string>
+    <string name="fab_component_animation">Fab Component Animation</string>
+    <string name="edit">Edit</string>
+    <string name="angel_beach">Angel Beach</string>
+    <string name="trilogy">Trilogy</string>
+    <string name="sheet_component_animation">Sheet Component Animation</string>
 </resources>

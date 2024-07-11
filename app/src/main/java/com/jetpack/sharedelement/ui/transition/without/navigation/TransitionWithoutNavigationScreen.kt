@@ -9,9 +9,10 @@ import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
@@ -119,7 +120,7 @@ private fun MainContent(
                     CoffeeDetailScreen(
                         modifier = Modifier
                             .padding(10.dp)
-                            .clip(RoundedCornerShape(30.dp))
+                            .clip(MaterialTheme.shapes.small.copy(all = CornerSize(25.dp)))
                             .background(Color.LightGray.copy(alpha = 0.5f))
                             // Adding shared element for the detailed view of the coffee item
                             // The sharedElement modifier is used to specify the shared element for the transition.

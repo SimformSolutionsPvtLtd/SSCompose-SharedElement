@@ -14,11 +14,13 @@ import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.jetpack.sharedelement.data.FakeDataProvider
 import com.jetpack.sharedelement.model.Snack
 import com.jetpack.sharedelement.ui.theme.SharedElementTransitionTheme
@@ -50,18 +52,23 @@ fun SharedTransitionScope.SnackItem(
                 .sharedBounds(
                     sharedContentState = rememberSharedContentState(key = "${snack.name}-bounds"),
                     animatedVisibilityScope = this@AnimatedVisibility,
-                    boundsTransform = boundsTransition,
-                    clipInOverlayDuringTransition = OverlayClip(shapeForSharedElement)
+                    boundsTransform = snackBoundsTransition,
+                    clipInOverlayDuringTransition = OverlayClip(
+                        clipShape = MaterialTheme.shapes.small.copy(CornerSize(15.dp))
+                    )
                 )
-                .background(MaterialTheme.colors.onPrimary, shapeForSharedElement)
-                .clip(shapeForSharedElement)
+                .background(
+                    color = MaterialTheme.colors.onPrimary,
+                    shape = MaterialTheme.shapes.small.copy(all = CornerSize(15.dp))
+                )
+                .clip(shape = MaterialTheme.shapes.small.copy(all = CornerSize(15.dp)))
         ) {
             SnackContents(
                 modifier = Modifier
                     .sharedElement(
                         state = rememberSharedContentState(key = snack.name),
                         animatedVisibilityScope = this@AnimatedVisibility,
-                        boundsTransform = boundsTransition
+                        boundsTransform = snackBoundsTransition
                     )
                     .clickable(onClick = onClick),
                 name = snack.name,

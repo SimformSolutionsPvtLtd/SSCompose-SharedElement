@@ -3,17 +3,14 @@
 package com.jetpack.sharedelement.ui.transition.animated.visibility
 
 import android.content.res.Configuration
-import androidx.compose.animation.BoundsTransform
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
@@ -36,14 +33,6 @@ import com.jetpack.sharedelement.R
 import com.jetpack.sharedelement.data.FakeDataProvider
 import com.jetpack.sharedelement.model.Snack
 import com.jetpack.sharedelement.ui.theme.SharedElementTransitionTheme
-
-val boundsTransition = BoundsTransform { _, _ -> sharedElementTransitionSpec() }
-val shapeForSharedElement = RoundedCornerShape(16.dp)
-
-/**
- * Define an animation specification with a tween animation of 500 milliseconds
- */
-fun <T> sharedElementTransitionSpec() = tween<T>(durationMillis = 500)
 
 /**
  * Composable function for shared element transition demo with AnimatedVisibility.
@@ -90,7 +79,7 @@ fun TransitionWithAnimatedVisibilityScreen(
  * Applies animations and blur effect when a snack is selected.
  */
 @Composable
-fun MainContent(
+private fun MainContent(
     modifier: Modifier = Modifier,
     snacks: List<Snack>,
     selectedSnack: Snack?,

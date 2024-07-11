@@ -5,12 +5,12 @@ package com.jetpack.sharedelement.ui.transition.with.navigation
 import android.content.res.Configuration
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
@@ -20,7 +20,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -35,10 +34,6 @@ import com.jetpack.sharedelement.R
 import com.jetpack.sharedelement.data.FakeDataProvider
 import com.jetpack.sharedelement.model.Album
 import com.jetpack.sharedelement.ui.theme.SharedElementTransitionTheme
-
-val boundsTransform = { _: Rect, _: Rect ->
-    tween<Rect>(500)
-}
 
 /**
  * Composable function for the shared element transition demo with navigation
@@ -118,7 +113,7 @@ private fun MainContent(
                 AlbumDetailScreen(
                     modifier = Modifier
                         .padding(10.dp)
-                        .clip(RoundedCornerShape(30.dp))
+                        .clip(MaterialTheme.shapes.small.copy(all = CornerSize(25.dp)))
                         .background(Color.LightGray.copy(alpha = 0.5f))
                         // Adding shared element for the detailed view of the album cover
                         // The sharedElement modifier is used to specify the shared element for the transition.
@@ -128,7 +123,7 @@ private fun MainContent(
                         .sharedElement(
                             state = rememberSharedContentState(key = album.id),
                             animatedVisibilityScope = this,
-                            boundsTransform = boundsTransform
+                            boundsTransform = albumBoundsTransform
                         ),
                     album = album,
                     onBackClick = {

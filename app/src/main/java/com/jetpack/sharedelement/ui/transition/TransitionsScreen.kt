@@ -5,8 +5,9 @@ import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material.Button
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
@@ -14,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -47,7 +49,7 @@ fun TransitionsScreen(
             transitions.forEach { transitionModel ->
                 TransitionButton(
                     modifier = Modifier.padding(12.dp).fillMaxWidth(),
-                    shape = RoundedCornerShape(12.dp),
+                    shape = MaterialTheme.shapes.small.copy(all = CornerSize(15.dp)),
                     text = transitionModel.name,
                     onClick = {
                         navigateTo(transitionModel.screen.route)
@@ -61,7 +63,7 @@ fun TransitionsScreen(
 @Composable
 private fun TransitionButton(
     modifier: Modifier = Modifier,
-    shape: RoundedCornerShape,
+    shape: Shape,
     text: String,
     onClick: () -> Unit
 ) {
@@ -94,6 +96,14 @@ private fun getTransitions(context: Context): List<Transition> = listOf(
     Transition(
         name = context.getString(R.string.animated_visibility_shared_element),
         screen = Screens.TransitionWithAnimatedVisibilityScreen
+    ),
+    Transition(
+        name = context.getString(R.string.sheet_component_animation),
+        screen = Screens.TransitionWithSheetScreen
+    ),
+    Transition(
+        name = context.getString(R.string.fab_component_animation),
+        screen = Screens.TransitionWithFabComponentScreen
     )
 )
 
@@ -103,7 +113,7 @@ private fun getTransitions(context: Context): List<Transition> = listOf(
 private fun TransitionButtonPreview() {
     SharedElementTransitionTheme {
         TransitionButton(
-            shape = RoundedCornerShape(12.dp),
+            shape = MaterialTheme.shapes.small.copy(all = CornerSize(15.dp)),
             text = stringResource(R.string.shared_element_transition_with_navigation),
             onClick = { /* Click Action */ }
         )

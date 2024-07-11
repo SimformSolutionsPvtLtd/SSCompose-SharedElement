@@ -17,7 +17,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
@@ -88,7 +88,7 @@ private fun AlbumDetailHeader(
         Image(
             modifier = Modifier
                 .size(400.dp)
-                .clip(RoundedCornerShape(30.dp)),
+                .clip(MaterialTheme.shapes.small.copy(all = CornerSize(25.dp))),
             painter = cover,
             contentDescription = null,
             contentScale = ContentScale.Crop,
