@@ -1,20 +1,17 @@
 @file:OptIn(ExperimentalSharedTransitionApi::class)
 
-package com.jetpack.sharedelement.ui.transition.text.transform
+package com.jetpack.sharedelement.ui.transition.fab
 
 import android.content.res.Configuration
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
@@ -26,33 +23,35 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.jetpack.sharedelement.R
+import com.jetpack.sharedelement.data.FakeDataProvider
+import com.jetpack.sharedelement.model.Profile
 import com.jetpack.sharedelement.ui.theme.SharedElementTransitionTheme
 
 /**
- * Composable function for the shared element transition demo text component
+ * Composable function for the shared element transition demo with fab component
  */
 @Composable
-fun TransitionWithTextTransformScreen(
+fun TransitionWithFabComponentScreen(
     modifier: Modifier = Modifier,
     onBack: () -> Unit
 ) {
     var showDetails by remember { mutableStateOf(false) }
+    val profiles = remember(Unit) { FakeDataProvider.getFabProfiles() }
 
     Scaffold(
         modifier = modifier,
         topBar = {
             TopAppBar(
-                title = {
-                    Text(stringResource(R.string.text_transform_animation))
-                },
+                title = { Text(stringResource(R.string.fab_component_animation)) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null)
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = null
+                        )
                     }
                 }
             )
@@ -60,6 +59,7 @@ fun TransitionWithTextTransformScreen(
     ) { paddingValues ->
         MainContent(
             modifier = Modifier.padding(paddingValues),
+            profiles = profiles,
             showDetails = showDetails,
             onShowDetails = {
                 showDetails = true
@@ -72,28 +72,17 @@ fun TransitionWithTextTransformScreen(
 }
 
 /**
- * Composable function demonstrating text transformation animation.
+ * Composable function demonstrating a FAB component animation.
  * Manages the state to show details using SharedTransitionLayout and AnimatedContent.
  */
 @Composable
 private fun MainContent(
     modifier: Modifier = Modifier,
+    profiles: List<Profile>,
     showDetails: Boolean,
     onShowDetails: () -> Unit,
     onBack: () -> Unit
 ) {
-    val roundedBoxModifier = Modifier
-        .padding(15.dp)
-        .border(
-            width = 1.dp,
-            color = Color.Gray,
-            shape = MaterialTheme.shapes.small.copy(all = CornerSize(8.dp))
-        )
-        .background(
-            color = Color.LightGray,
-            shape = MaterialTheme.shapes.small.copy(all = CornerSize(8.dp))
-        )
-
     SharedTransitionLayout(
         modifier = modifier
     ) {
@@ -101,31 +90,30 @@ private fun MainContent(
             targetState = showDetails,
             label = "basic_transition"
         ) { targetState ->
-            val sharedBoundsModifier = Modifier
-                .sharedBounds(
-                    sharedContentState = rememberSharedContentState(key = "bounds"),
-                    animatedVisibilityScope = this@AnimatedContent,
-                    enter = textEnterAnimation,
-                    exit = textExitAnimation,
-                    boundsTransform = textBoundsTransform
-                )
-
             if (!targetState) {
-                Emoji(
+                FabMainContent(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .then(roundedBoxModifier)
-                        .then(sharedBoundsModifier)
-                        .clickable(onClick = onShowDetails),
+                        .fillMaxSize()
+                        .sharedBounds(
+                            sharedContentState = rememberSharedContentState(key = "bounds"),
+                            animatedVisibilityScope = this@AnimatedContent,
+                            enter = fabEnterAnimation,
+                            exit = fabExitAnimation,
+                            boundsTransform = fabBoundsTransform
+                        )
+                        .clickable(
+                            interactionSource = remember { MutableInteractionSource() },
+                            indication = null,
+                            onClick = onShowDetails
+                        ),
                     animatedVisibilityScope = this@AnimatedContent
                 )
             } else {
-                EmojiDetails(
-                    modifier = Modifier
-                        .then(roundedBoxModifier)
-                        .then(sharedBoundsModifier)
-                        .clickable(onClick = onBack),
+                FabDetailsContent(
+                    modifier = Modifier.fillMaxSize(),
                     animatedVisibilityScope = this@AnimatedContent,
+                    profiles = profiles,
+                    onBack = onBack
                 )
             }
         }
@@ -135,12 +123,11 @@ private fun MainContent(
 @Composable
 @Preview(showBackground = true)
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
-private fun MainContentPreview() {
+private fun TransitionWithFabComponentScreenPreview() {
     SharedElementTransitionTheme {
-        MainContent(
-            showDetails = false,
-            onShowDetails = { /* Handle Click Action*/ },
-            onBack = {/* Handle Click Action*/ }
+        TransitionWithFabComponentScreen(
+            modifier = Modifier.fillMaxSize(),
+            onBack = { /* Handle Click Action */ }
         )
     }
 }
@@ -148,12 +135,13 @@ private fun MainContentPreview() {
 @Composable
 @Preview(showBackground = true)
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
-private fun MainContentWithShowDetails() {
+private fun MainContentWithShowDetailsPreview() {
     SharedElementTransitionTheme {
         MainContent(
+            profiles = FakeDataProvider.getFabProfiles(),
             showDetails = true,
-            onShowDetails = { /* Handle Click Action*/ },
-            onBack = { /* Handle Click Action*/ }
+            onShowDetails = { /* Handle Click Action */ },
+            onBack = { /* Handle Click Action */ }
         )
     }
 }

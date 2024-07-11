@@ -40,9 +40,9 @@ fun SharedTransitionScope.EmojiDetails(
         Image(
             modifier = Modifier
                 .sharedElement(
-                    rememberSharedContentState(key = "image"),
+                    state = rememberSharedContentState(key = "image"),
                     animatedVisibilityScope = animatedVisibilityScope,
-                    boundsTransform = boundsTransform
+                    boundsTransform = textBoundsTransform
                 )
                 .size(200.dp)
                 .clip(CircleShape),
@@ -52,9 +52,9 @@ fun SharedTransitionScope.EmojiDetails(
         Text(
             modifier = Modifier
                 .sharedBounds(
-                    rememberSharedContentState(key = "title"),
+                    sharedContentState = rememberSharedContentState(key = "title"),
                     animatedVisibilityScope = animatedVisibilityScope,
-                    boundsTransform = textBoundsTransform
+                    boundsTransform = animatedTextBoundsTransform
                 ),
             text = stringResource(R.string.emojis),
             fontSize = 28.sp,

@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
@@ -62,12 +63,17 @@ fun SharedTransitionScope.SnackDetailScreen(
             Column(
                 modifier = Modifier
                     .padding(horizontal = 16.dp)
-                    .background(MaterialTheme.colors.onPrimary, shapeForSharedElement)
-                    .clip(shapeForSharedElement)
+                    .background(
+                        color = MaterialTheme.colors.onPrimary,
+                        shape = MaterialTheme.shapes.small.copy(all = CornerSize(15.dp))
+                    )
+                    .clip(shape = MaterialTheme.shapes.small.copy(all = CornerSize(15.dp)))
                     .sharedBounds(
                         sharedContentState = rememberSharedContentState(key = "${targetSnack.name}-bounds"),
                         animatedVisibilityScope = this@AnimatedContent,
-                        clipInOverlayDuringTransition = OverlayClip(shapeForSharedElement)
+                        clipInOverlayDuringTransition = OverlayClip(
+                            clipShape = MaterialTheme.shapes.small.copy(all = CornerSize(15.dp))
+                        )
                     )
             ) {
                 SnackContents(

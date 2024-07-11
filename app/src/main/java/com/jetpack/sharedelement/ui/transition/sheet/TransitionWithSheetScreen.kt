@@ -1,15 +1,17 @@
 @file:OptIn(ExperimentalSharedTransitionApi::class)
 
-package com.jetpack.sharedelement.ui.transition.text.transform
+package com.jetpack.sharedelement.ui.transition.sheet
 
 import android.content.res.Configuration
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material.Icon
@@ -26,6 +28,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -34,10 +37,10 @@ import com.jetpack.sharedelement.R
 import com.jetpack.sharedelement.ui.theme.SharedElementTransitionTheme
 
 /**
- * Composable function for the shared element transition demo text component
+ * Composable function for the shared element transition demo with sheet component
  */
 @Composable
-fun TransitionWithTextTransformScreen(
+fun TransitionWithSheetScreen(
     modifier: Modifier = Modifier,
     onBack: () -> Unit
 ) {
@@ -47,9 +50,7 @@ fun TransitionWithTextTransformScreen(
         modifier = modifier,
         topBar = {
             TopAppBar(
-                title = {
-                    Text(stringResource(R.string.text_transform_animation))
-                },
+                title = { Text(stringResource(R.string.sheet_component_animation)) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null)
@@ -59,20 +60,19 @@ fun TransitionWithTextTransformScreen(
         }
     ) { paddingValues ->
         MainContent(
-            modifier = Modifier.padding(paddingValues),
+            modifier = Modifier
+                .padding(paddingValues)
+                .background(Color.LightGray)
+                .fillMaxSize(),
             showDetails = showDetails,
-            onShowDetails = {
-                showDetails = true
-            },
-            onBack = {
-                showDetails = false
-            }
+            onShowDetails = { showDetails = true },
+            onBack = { showDetails = false }
         )
     }
 }
 
 /**
- * Composable function demonstrating text transformation animation.
+ * Composable function demonstrating a Sheet component animation.
  * Manages the state to show details using SharedTransitionLayout and AnimatedContent.
  */
 @Composable
@@ -82,50 +82,41 @@ private fun MainContent(
     onShowDetails: () -> Unit,
     onBack: () -> Unit
 ) {
-    val roundedBoxModifier = Modifier
-        .padding(15.dp)
-        .border(
-            width = 1.dp,
-            color = Color.Gray,
-            shape = MaterialTheme.shapes.small.copy(all = CornerSize(8.dp))
-        )
-        .background(
-            color = Color.LightGray,
-            shape = MaterialTheme.shapes.small.copy(all = CornerSize(8.dp))
-        )
+    val commonAlbumModifier = Modifier
+            .padding(10.dp)
+            .clip(MaterialTheme.shapes.small.copy(all = CornerSize(20.dp)))
+            .background(Color.White)
 
     SharedTransitionLayout(
         modifier = modifier
     ) {
         AnimatedContent(
             targetState = showDetails,
-            label = "basic_transition"
+            label = "transition"
         ) { targetState ->
-            val sharedBoundsModifier = Modifier
-                .sharedBounds(
-                    sharedContentState = rememberSharedContentState(key = "bounds"),
-                    animatedVisibilityScope = this@AnimatedContent,
-                    enter = textEnterAnimation,
-                    exit = textExitAnimation,
-                    boundsTransform = textBoundsTransform
-                )
-
             if (!targetState) {
-                Emoji(
+                AlbumScreen(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .then(roundedBoxModifier)
-                        .then(sharedBoundsModifier)
-                        .clickable(onClick = onShowDetails),
+                        .height(100.dp)
+                        .then(commonAlbumModifier)
+                        .clickable(
+                            interactionSource = remember { MutableInteractionSource() },
+                            indication = null,
+                            onClick = onShowDetails
+                        ),
                     animatedVisibilityScope = this@AnimatedContent
                 )
             } else {
-                EmojiDetails(
+                AlbumDetailScreen(
                     modifier = Modifier
-                        .then(roundedBoxModifier)
-                        .then(sharedBoundsModifier)
-                        .clickable(onClick = onBack),
-                    animatedVisibilityScope = this@AnimatedContent,
+                        .fillMaxWidth()
+                        .then(commonAlbumModifier)
+                        .clickable(
+                            interactionSource = remember { MutableInteractionSource() },
+                            indication = null,
+                            onClick = onBack
+                        ),
+                    animatedVisibilityScope = this@AnimatedContent
                 )
             }
         }
@@ -135,25 +126,21 @@ private fun MainContent(
 @Composable
 @Preview(showBackground = true)
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
-private fun MainContentPreview() {
+private fun TransitionWithSheetScreenPreview() {
     SharedElementTransitionTheme {
-        MainContent(
-            showDetails = false,
-            onShowDetails = { /* Handle Click Action*/ },
-            onBack = {/* Handle Click Action*/ }
-        )
+        TransitionWithSheetScreen(onBack = { /* Handle Play Action */ })
     }
 }
 
 @Composable
 @Preview(showBackground = true)
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
-private fun MainContentWithShowDetails() {
+private fun MainContentWithShowDetailsPreview() {
     SharedElementTransitionTheme {
         MainContent(
             showDetails = true,
-            onShowDetails = { /* Handle Click Action*/ },
-            onBack = { /* Handle Click Action*/ }
+            onShowDetails = { /* Handle Click Action */ },
+            onBack = { /* Handle Click Action */ }
         )
     }
 }
