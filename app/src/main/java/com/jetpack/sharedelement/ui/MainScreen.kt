@@ -8,6 +8,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.jetpack.sharedelement.navigation.Screens
 import com.jetpack.sharedelement.ui.transition.TransitionsScreen
+import com.jetpack.sharedelement.ui.transition.animated.visibility.TransitionWithAnimatedVisibilityScreen
+import com.jetpack.sharedelement.ui.transition.text.transform.TransitionWithTextTransformScreen
 import com.jetpack.sharedelement.ui.transition.with.navigation.TransitionWithNavigationScreen
 import com.jetpack.sharedelement.ui.transition.without.navigation.TransitionWithoutNavigationScreen
 
@@ -40,6 +42,20 @@ fun MainScreen(
         composable(Screens.TransitionWithoutNavigationScreen.route) {
             TransitionWithoutNavigationScreen(
                 modifier = Modifier.fillMaxSize(),
+                onBack = {
+                    navController.popBackStack()
+                }
+            )
+        }
+        composable(Screens.TransitionWithTextTransformScreen.route) {
+            TransitionWithTextTransformScreen(
+                onBack = {
+                    navController.popBackStack()
+                }
+            )
+        }
+        composable(Screens.TransitionWithAnimatedVisibilityScreen.route) {
+            TransitionWithAnimatedVisibilityScreen(
                 onBack = {
                     navController.popBackStack()
                 }

@@ -3,6 +3,7 @@ package com.jetpack.sharedelement.data
 import com.jetpack.sharedelement.model.Album
 import com.jetpack.sharedelement.model.Coffee
 import com.jetpack.sharedelement.R
+import com.jetpack.sharedelement.model.Snack
 
 object FakeDataProvider {
     fun getAlbums(): List<Album> =
@@ -127,5 +128,15 @@ object FakeDataProvider {
                         "Ideal serving: 60ml Espresso + 180-300ml steamed milk (depending on container)",
                 image = R.drawable.ic_caffe_latte
             )
+        )
+
+    fun getSnacks(): List<Snack> =
+        listOf(
+            Snack(name = "Cupcake", image = R.drawable.cupcake),
+            Snack(name = "Donut", image = R.drawable.donut),
+            Snack(name = "Eclair", image = R.drawable.eclair),
+            Snack(name = "Froyo", image = R.drawable.froyo),
+            Snack(name = "Gingerbread", image = R.drawable.gingerbread),
+            Snack(name = "Honeycomb", image = R.drawable.honeycomb)
         )
 }

@@ -86,6 +86,14 @@ private fun getTransitions(context: Context): List<Transition> = listOf(
     Transition(
         name = context.getString(R.string.set_without_navigation),
         screen = Screens.TransitionWithoutNavigationScreen
+    ),
+    Transition(
+        name = context.getString(R.string.text_transform_animation),
+        screen = Screens.TransitionWithTextTransformScreen
+    ),
+    Transition(
+        name = context.getString(R.string.animated_visibility_shared_element),
+        screen = Screens.TransitionWithAnimatedVisibilityScreen
     )
 )
 
