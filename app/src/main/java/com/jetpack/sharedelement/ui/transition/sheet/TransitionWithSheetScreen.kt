@@ -97,6 +97,7 @@ private fun MainContent(
             if (!targetState) {
                 AlbumScreen(
                     modifier = Modifier
+                        .fillMaxWidth()
                         .height(100.dp)
                         .then(commonAlbumModifier)
                         .clickable(

@@ -48,7 +48,7 @@ fun SharedTransitionScope.AlbumScreen(
             modifier = Modifier.padding(10.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(
-                space = 30.dp,
+                space = 20.dp,
                 alignment = Alignment.CenterHorizontally
             )
         ) {

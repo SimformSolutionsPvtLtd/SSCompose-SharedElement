@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -79,7 +80,8 @@ private fun CoffeeDetailHeader(
     ) {
         Image(
             modifier = Modifier
-                .size(400.dp)
+                .fillMaxWidth()
+                .height(400.dp)
                 .clip(MaterialTheme.shapes.small.copy(all = CornerSize(25.dp))),
             painter = cover,
             contentDescription = null,
