@@ -1,11 +1,13 @@
+![](/gif/SharedElementBanner.png)
+
 # SSCompose-SharedElementTransition
 
 <div align="center">
 
 [![Platform-badge]][Platform]
-[![Jetpack Compose-badge]][Jetpack-Compose]
-[![Kotlin-badge]][API]
-[![API-badge]][Kotlin]
+[![Jetpack-compose-badge]][Jetpack-Compose]
+[![Kotlin-badge]][Kotlin]
+[![API-badge]][API]
 
 </div>
 
@@ -77,17 +79,19 @@ For bugs, feature requests, and discussion please use __[GitHub-Issues]__.
 Distributed under the MIT [license][MIT-License]. See LICENSE for details.
 
 <!-- Reference Links -->
-[API]:                          https://developer.android.com/tools/releases/platforms#7.0
+[API]:                          https://developer.android.com/tools/releases/platforms#8.0
 
 [Awesome-Mobile-Libraries]:     https://github.com/SimformSolutionsPvtLtd/Awesome-Mobile-Libraries
 
-[Contributing-Guide]:           https://github.com/SimformSolutionsPvtLtd/SSComposeCookBook/blob/main/CONTRIBUTING.md
+[Contributing-Guide]:           https://github.com/SimformSolutionsPvtLtd/SSCompose-SharedElement/blob/main/CONTRIBUTING.md
 
 [Compose-Latest-Version]:       https://developer.android.com/jetpack/androidx/releases/compose#versions
 
 [Google-IO-Event-Link]:         https://android-developers.googleblog.com/2024/05/whats-new-in-jetpack-compose-at-io-24.html
 
-[GitHub-Issues]:                <https://github.com/SimformSolutionsPvtLtd/SSComposeCookBook/issues>
+[GitHub-Issues]:                <https://github.com/SimformSolutionsPvtLtd/SSCompose-SharedElement/issues>
+
+[Jetpack-Compose]:              https://developer.android.com/jetpack/compose
 
 [Kotlin]:                       https://kotlinlang.org
 
@@ -103,12 +107,12 @@ Distributed under the MIT [license][MIT-License]. See LICENSE for details.
 
 [SharedBounds]:                 https://developer.android.com/develop/ui/compose/animation/shared-elements#shared-bounds
 
-[Stargazers]:                   <https://github.com/SimformSolutionsPvtLtd/SSComposeCookBook/stargazers>
+[Stargazers]:                   <https://github.com/SimformSolutionsPvtLtd/SSCompose-SharedElement/stargazers>
 
 <!-- Badges -->
 [API-badge]:                    https://img.shields.io/badge/API-26+-51b055
 
-[Jetpack Compose-badge]:        https://img.shields.io/badge/Jetpack%20Compose-1.7.0--beta06-brightgreen?logo=jetpackcompose&logoColor=3ddc84
+[Jetpack-compose-badge]:        https://img.shields.io/badge/Jetpack%20Compose-1.7.0--beta06-brightgreen?logo=jetpackcompose&logoColor=3ddc84
 
 [Kotlin-badge]:                 https://img.shields.io/badge/Kotlin-v2.0.0-blue.svg?logo=kotlin
 
