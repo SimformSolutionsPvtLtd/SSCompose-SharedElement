@@ -83,7 +83,7 @@ Distributed under the MIT [license][MIT-License]. See LICENSE for details.
 
 [Awesome-Mobile-Libraries]:     https://github.com/SimformSolutionsPvtLtd/Awesome-Mobile-Libraries
 
-[Contributing-Guide]:           https://github.com/SimformSolutionsPvtLtd/SSCompose-SharedElement/blob/main/CONTRIBUTING.md
+[Contributing-Guide]:           https://github.com/SimformSolutionsPvtLtd/SSCompose-SharedElement/blob/master/CONTRIBUTING.md
 
 [Compose-Latest-Version]:       https://developer.android.com/jetpack/androidx/releases/compose#versions
 
