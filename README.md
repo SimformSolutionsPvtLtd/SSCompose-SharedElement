@@ -49,14 +49,14 @@ In Compose, there are a few high level APIs that help you create shared elements
 
 ## Shared Element Transition Samples
 
-| Shared Element Transition With Navigation              | Shared Element Transition Without Navigation              | Shared Element Transition With Animated Visibility             |
-|--------------------------------------------------------|-----------------------------------------------------------|----------------------------------------------------------------|
-| <img src="/gif/SETWithNavigation.gif" height="500px"/> | <img src="/gif/SETWithoutNavigation.gif" height="500px"/> | <img src="/gif/SETWithAnimatedVisibility.gif" height="500px"/> |
+| Shared Element Transition With Navigation | Shared Element Transition Without Navigation | Shared Element Transition With Animated Visibility |
+| -- | -- | -- |
+| <div align="center"><a href="app/src/main/java/com/jetpack/sharedelement/ui/transition/with/navigation/TransitionWithNavigationScreen.kt#L49" target="_blank"><img src="/gif/SETWithNavigation.gif" height="500px"/></a></div> | <div align="center"><a href="app/src/main/java/com/jetpack/sharedelement/ui/transition/without/navigation/TransitionWithoutNavigationScreen.kt#L59" target="_blank"><img src="/gif/SETWithoutNavigation.gif" height="500px"/></a></div> | <div align="center"><a href="app/src/main/java/com/jetpack/sharedelement/ui/transition/animated/visibility/TransitionWithAnimatedVisibilityScreen.kt#L48" target="_blank"><img src="/gif/SETWithAnimatedVisibility.gif" height="500px"/></a></div> |
 
 
-| Shared Element Transition With Text Transform      | Shared Element Transition With Sheet Component      | Shared Element Transition With Fab Component               |
-|----------------------------------------------------|-----------------------------------------------------|------------------------------------------------------------| 
-| <img src="/gif/TextTransform.gif" height="500px"/> | <img src="/gif/SheetAnimation.gif" height="500px"/> | <img src="/gif/FabComponentAnimation.gif" height="500px"/> |
+| Shared Element Transition With Text Transform | Shared Element Transition With Sheet Component | Shared Element Transition With Fab Component |
+| -- | -- | -- |
+| <div align="center"><a href="app/src/main/java/com/jetpack/sharedelement/ui/transition/text/transform/TransitionWithTextTransformScreen.kt#L46" target="_blank"><img src="/gif/TextTransform.gif" height="500px"/></a></div> | <div align="center"><a href="app/src/main/java/com/jetpack/sharedelement/ui/transition/sheet/TransitionWithSheetScreen.kt#L49" target="_blank"><img src="/gif/SheetAnimation.gif" height="500px"/></a></div> | <div align="center"><a href="app/src/main/java/com/jetpack/sharedelement/ui/transition/fab/TransitionWithFabComponentScreen.kt#L44" target="_blank"><img src="/gif/FabComponentAnimation.gif" height="500px"/></a></div> |
 
 ## Official Documentations
 - [Shared Element Transition][Shared-Element-Transition]
