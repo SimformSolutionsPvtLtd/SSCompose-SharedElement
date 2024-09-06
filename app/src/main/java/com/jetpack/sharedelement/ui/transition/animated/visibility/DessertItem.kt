@@ -22,18 +22,18 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jetpack.sharedelement.data.FakeDataProvider
-import com.jetpack.sharedelement.model.Snack
+import com.jetpack.sharedelement.model.Dessert
 import com.jetpack.sharedelement.ui.theme.SharedElementTransitionTheme
-import com.jetpack.sharedelement.ui.transition.animated.visibility.components.SnackContents
+import com.jetpack.sharedelement.ui.transition.animated.visibility.components.DesertContents
 
 /**
- * Composable function for displaying a snack item with shared element transition.
+ * Composable function for displaying a dessert item with shared element transition.
  * Includes animations for visibility changes.
  */
 @Composable
-fun SharedTransitionScope.SnackItem(
+fun SharedTransitionScope.DessertItem(
     modifier: Modifier = Modifier,
-    snack: Snack,
+    dessert: Dessert,
     visible: Boolean,
     onClick: () -> Unit
 ) {
@@ -50,9 +50,9 @@ fun SharedTransitionScope.SnackItem(
         Box(
             modifier = Modifier
                 .sharedBounds(
-                    sharedContentState = rememberSharedContentState(key = "${snack.name}-bounds"),
+                    sharedContentState = rememberSharedContentState(key = "${dessert.name}-bounds"),
                     animatedVisibilityScope = this@AnimatedVisibility,
-                    boundsTransform = snackBoundsTransition,
+                    boundsTransform = dessertBoundsTransition,
                     clipInOverlayDuringTransition = OverlayClip(
                         clipShape = MaterialTheme.shapes.small.copy(CornerSize(15.dp))
                     )
@@ -63,16 +63,16 @@ fun SharedTransitionScope.SnackItem(
                 )
                 .clip(shape = MaterialTheme.shapes.small.copy(all = CornerSize(15.dp)))
         ) {
-            SnackContents(
+            DesertContents(
                 modifier = Modifier
                     .sharedElement(
-                        state = rememberSharedContentState(key = snack.name),
+                        state = rememberSharedContentState(key = dessert.name),
                         animatedVisibilityScope = this@AnimatedVisibility,
-                        boundsTransform = snackBoundsTransition
+                        boundsTransform = dessertBoundsTransition
                     )
                     .clickable(onClick = onClick),
-                name = snack.name,
-                image = snack.image
+                name = dessert.name,
+                image = dessert.image
             )
         }
     }
@@ -81,13 +81,13 @@ fun SharedTransitionScope.SnackItem(
 @Composable
 @Preview(showBackground = true)
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
-private fun SnackItemPreview() {
-    val snack = FakeDataProvider.getSnacks()[0]
+private fun DessertItemPreview() {
+    val dessert = FakeDataProvider.getDesserts()[0]
 
     SharedElementTransitionTheme {
         SharedTransitionLayout {
-            SnackItem(
-                snack = snack,
+            DessertItem(
+                dessert = dessert,
                 visible = true,
                 onClick = { /* Handle Click Action*/ }
             )

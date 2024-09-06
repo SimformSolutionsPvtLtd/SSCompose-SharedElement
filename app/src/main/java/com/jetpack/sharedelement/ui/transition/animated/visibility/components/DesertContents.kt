@@ -19,11 +19,11 @@ import com.jetpack.sharedelement.R
 import com.jetpack.sharedelement.ui.theme.SharedElementTransitionTheme
 
 /**
- * Composable function for displaying the contents of a snack item.
- * Includes an image and the name of the snack.
+ * Composable function for displaying the contents of a dessert item.
+ * Includes an image and the name of the dessert.
  */
 @Composable
-fun SnackContents(
+fun DesertContents(
     modifier: Modifier = Modifier,
     name: String,
     image: Int
@@ -53,9 +53,9 @@ fun SnackContents(
 @Composable
 @Preview(showBackground = true)
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
-private fun SnackContentsPreview() {
+private fun DessertContentsPreview() {
     SharedElementTransitionTheme {
-        SnackContents(
+        DesertContents(
             name = "Cupcake",
             image = R.drawable.cupcake
         )

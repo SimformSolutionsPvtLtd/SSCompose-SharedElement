@@ -111,7 +111,7 @@ private fun MainContent(
                 )
 
             if (!targetState) {
-                Emoji(
+                Car(
                     modifier = Modifier
                         .fillMaxWidth()
                         .then(roundedBoxModifier)
@@ -120,7 +120,7 @@ private fun MainContent(
                     animatedVisibilityScope = this@AnimatedContent
                 )
             } else {
-                EmojiDetails(
+                CarDetails(
                     modifier = Modifier
                         .then(roundedBoxModifier)
                         .then(sharedBoundsModifier)

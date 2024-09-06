@@ -31,7 +31,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jetpack.sharedelement.R
 import com.jetpack.sharedelement.data.FakeDataProvider
-import com.jetpack.sharedelement.model.Snack
+import com.jetpack.sharedelement.model.Dessert
 import com.jetpack.sharedelement.ui.theme.SharedElementTransitionTheme
 
 /**
@@ -42,8 +42,8 @@ fun TransitionWithAnimatedVisibilityScreen(
     modifier: Modifier = Modifier,
     onBack: () -> Unit
 ) {
-    var selectedSnack by remember { mutableStateOf<Snack?>(null) }
-    val snacks = remember(Unit) { FakeDataProvider.getSnacks() }
+    var selectedDessert by remember { mutableStateOf<Dessert?>(null) }
+    val desserts = remember(Unit) { FakeDataProvider.getDesserts() }
 
     Scaffold(
         modifier = modifier,
@@ -62,28 +62,28 @@ fun TransitionWithAnimatedVisibilityScreen(
     ) { paddingValues ->
         MainContent(
             modifier = Modifier.padding(paddingValues),
-            snacks = snacks,
-            selectedSnack = selectedSnack,
-            onSelectedSnack = { snack ->
-                selectedSnack = snack
+            desserts = desserts,
+            selectedDessert = selectedDessert,
+            onSelectedDessert = { dessert ->
+                selectedDessert = dessert
             },
             onSaveClick = {
-                selectedSnack = null
+                selectedDessert = null
             }
         )
     }
 }
 
 /**
- * Composable function for displaying a list of snacks with shared element transitions.
- * Applies animations and blur effect when a snack is selected.
+ * Composable function for displaying a list of desserts with shared element transitions.
+ * Applies animations and blur effect when a dessert is selected.
  */
 @Composable
 private fun MainContent(
     modifier: Modifier = Modifier,
-    snacks: List<Snack>,
-    selectedSnack: Snack?,
-    onSelectedSnack: (Snack) -> Unit,
+    desserts: List<Dessert>,
+    selectedDessert: Dessert?,
+    onSelectedDessert: (Dessert) -> Unit,
     onSaveClick: () -> Unit
 ) {
     SharedTransitionLayout(
@@ -92,29 +92,29 @@ private fun MainContent(
         LazyColumn(
             modifier = Modifier
                 .background(Color.LightGray.copy(alpha = 0.5f))
-                .then(if (selectedSnack != null) Modifier.blur(10.dp) else Modifier)
+                .then(if (selectedDessert != null) Modifier.blur(10.dp) else Modifier)
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            itemsIndexed(snacks) { _, snack ->
-                SnackItem(
+            itemsIndexed(desserts) { _, dessert ->
+                DessertItem(
                     modifier = Modifier.animateItem(
                         placementSpec = sharedElementTransitionSpec(),
                         fadeOutSpec = sharedElementTransitionSpec(),
                         fadeInSpec = sharedElementTransitionSpec()
                     ),
-                    snack = snack,
-                    visible = selectedSnack != snack,
+                    dessert = dessert,
+                    visible = selectedDessert != dessert,
                     onClick = {
-                        onSelectedSnack(snack)
+                        onSelectedDessert(dessert)
                     }
                 )
             }
         }
-        if (selectedSnack != null) {
-            SnackDetailScreen(
+        if (selectedDessert != null) {
+            DessertDetailScreen(
                 modifier = Modifier.fillMaxSize(),
-                snack = selectedSnack,
+                dessert = selectedDessert,
                 onSaveClick = onSaveClick
             )
         }
@@ -127,9 +127,9 @@ private fun MainContent(
 private fun MainContentPreview() {
     SharedElementTransitionTheme {
         MainContent(
-            snacks = FakeDataProvider.getSnacks(),
-            selectedSnack = null,
-            onSelectedSnack = { /* Handle Click Action */ },
+            desserts = FakeDataProvider.getDesserts(),
+            selectedDessert = null,
+            onSelectedDessert = { /* Handle Click Action */ },
             onSaveClick = { /* Handle Click Action */ }
         )
     }
