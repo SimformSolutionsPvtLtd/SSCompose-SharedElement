@@ -4,7 +4,7 @@ import com.jetpack.sharedelement.model.Album
 import com.jetpack.sharedelement.model.Coffee
 import com.jetpack.sharedelement.R
 import com.jetpack.sharedelement.model.Profile
-import com.jetpack.sharedelement.model.Snack
+import com.jetpack.sharedelement.model.Dessert
 
 object FakeDataProvider {
     fun getAlbums(): List<Album> =
@@ -131,14 +131,14 @@ object FakeDataProvider {
             )
         )
 
-    fun getSnacks(): List<Snack> =
+    fun getDesserts(): List<Dessert> =
         listOf(
-            Snack(name = "Cupcake", image = R.drawable.cupcake),
-            Snack(name = "Donut", image = R.drawable.donut),
-            Snack(name = "Eclair", image = R.drawable.eclair),
-            Snack(name = "Froyo", image = R.drawable.froyo),
-            Snack(name = "Gingerbread", image = R.drawable.gingerbread),
-            Snack(name = "Honeycomb", image = R.drawable.honeycomb)
+            Dessert(name = "Cupcake", image = R.drawable.cupcake),
+            Dessert(name = "Donut", image = R.drawable.donut),
+            Dessert(name = "Eclair", image = R.drawable.eclair),
+            Dessert(name = "Froyo", image = R.drawable.froyo),
+            Dessert(name = "Gingerbread", image = R.drawable.gingerbread),
+            Dessert(name = "Honeycomb", image = R.drawable.honeycomb)
         )
 
     fun getFabProfiles(): List<Profile> {

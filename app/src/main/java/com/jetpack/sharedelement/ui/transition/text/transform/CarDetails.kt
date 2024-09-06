@@ -9,8 +9,7 @@ import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
@@ -18,7 +17,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -28,15 +26,15 @@ import com.jetpack.sharedelement.R
 import com.jetpack.sharedelement.ui.theme.SharedElementTransitionTheme
 
 /**
- * Composable function for displaying the main content screen.
- * Handles shared element transitions for main content items.
+ * Composable function for displaying the details content screen.
+ * Handles shared element transitions for details content items.
  */
 @Composable
-fun SharedTransitionScope.Emoji(
+fun SharedTransitionScope.CarDetails(
     modifier: Modifier = Modifier,
     animatedVisibilityScope: AnimatedVisibilityScope,
 ) {
-    Row(
+    Column(
         modifier = modifier
     ) {
         Image(
@@ -46,11 +44,10 @@ fun SharedTransitionScope.Emoji(
                     animatedVisibilityScope = animatedVisibilityScope,
                     boundsTransform = textBoundsTransform
                 )
-                .size(100.dp)
+                .size(200.dp)
                 .clip(CircleShape),
-            painter = painterResource(id = R.drawable.dp10),
-            contentDescription = stringResource(R.string.emojis),
-            contentScale = ContentScale.Crop
+            painter = painterResource(id = R.drawable.car),
+            contentDescription = stringResource(R.string.car),
         )
         Text(
             modifier = Modifier
@@ -59,9 +56,14 @@ fun SharedTransitionScope.Emoji(
                     animatedVisibilityScope = animatedVisibilityScope,
                     boundsTransform = animatedTextBoundsTransform
                 ),
-            text = stringResource(R.string.emojis),
-            fontSize = 21.sp,
+            text = stringResource(R.string.car),
+            fontSize = 28.sp,
             color = MaterialTheme.colors.onSurface
+        )
+        Text(
+            modifier = Modifier.skipToLookaheadSize(),
+            color = MaterialTheme.colors.onSurface,
+            text = stringResource(id = R.string.album_description),
         )
     }
 }
@@ -69,14 +71,11 @@ fun SharedTransitionScope.Emoji(
 @Composable
 @Preview(showBackground = true)
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
-private fun EmojiPreview() {
+private fun CarDetailsPreview() {
     SharedElementTransitionTheme {
         SharedTransitionLayout {
             AnimatedVisibility(true) {
-                Emoji(
-                    modifier = Modifier.fillMaxWidth(),
-                    animatedVisibilityScope = this@AnimatedVisibility
-                )
+                CarDetails(animatedVisibilityScope = this@AnimatedVisibility)
             }
         }
     }

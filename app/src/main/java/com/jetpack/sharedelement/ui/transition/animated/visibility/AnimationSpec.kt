@@ -12,7 +12,7 @@ private const val ANIMATION_DURATION_IN_MILLIS = 500
  * BoundsTransform for general shared element transitions
  * Tween animation applied to transition between initial and target bounds
  */
-val snackBoundsTransition = BoundsTransform { _, _ ->
+val dessertBoundsTransition = BoundsTransform { _, _ ->
     sharedElementTransitionSpec()
 }
 

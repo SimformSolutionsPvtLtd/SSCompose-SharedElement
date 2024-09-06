@@ -33,28 +33,28 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jetpack.sharedelement.R
 import com.jetpack.sharedelement.data.FakeDataProvider
-import com.jetpack.sharedelement.model.Snack
+import com.jetpack.sharedelement.model.Dessert
 import com.jetpack.sharedelement.ui.theme.SharedElementTransitionTheme
-import com.jetpack.sharedelement.ui.transition.animated.visibility.components.SnackContents
+import com.jetpack.sharedelement.ui.transition.animated.visibility.components.DesertContents
 
 /**
- * Composable function for displaying the details content screen for a selected snack.
+ * Composable function for displaying the details content screen for a selected desert.
  * Handles shared element transitions for details content items.
  */
 @Composable
-fun SharedTransitionScope.SnackDetailScreen(
+fun SharedTransitionScope.DessertDetailScreen(
     modifier: Modifier = Modifier,
-    snack: Snack,
+    dessert: Dessert,
     onSaveClick: () -> Unit
 ) {
     AnimatedContent(
         modifier = modifier,
-        targetState = snack,
+        targetState = dessert,
         transitionSpec = {
             fadeIn() togetherWith fadeOut()
         },
-        label = "SnackEditDetails"
-    ) { targetSnack ->
+        label = "DessertEditDetails"
+    ) { targetDessert ->
         Box(
             modifier = Modifier
                 .background(Color.Black.copy(alpha = 0.5f)),
@@ -63,28 +63,24 @@ fun SharedTransitionScope.SnackDetailScreen(
             Column(
                 modifier = Modifier
                     .padding(horizontal = 16.dp)
+                    .clip(shape = MaterialTheme.shapes.small.copy(all = CornerSize(15.dp)))
                     .background(
                         color = MaterialTheme.colors.onPrimary,
                         shape = MaterialTheme.shapes.small.copy(all = CornerSize(15.dp))
                     )
-                    .clip(shape = MaterialTheme.shapes.small.copy(all = CornerSize(15.dp)))
-                    .sharedBounds(
-                        sharedContentState = rememberSharedContentState(key = "${targetSnack.name}-bounds"),
-                        animatedVisibilityScope = this@AnimatedContent,
-                        clipInOverlayDuringTransition = OverlayClip(
-                            clipShape = MaterialTheme.shapes.small.copy(all = CornerSize(15.dp))
-                        )
-                    )
             ) {
-                SnackContents(
+                DesertContents(
                     modifier = Modifier
                         .sharedElement(
-                            state = rememberSharedContentState(key = targetSnack.name),
-                            animatedVisibilityScope = this@AnimatedContent
+                            state = rememberSharedContentState(key = targetDessert.name),
+                            animatedVisibilityScope = this@AnimatedContent,
+                            clipInOverlayDuringTransition = OverlayClip(
+                                clipShape = MaterialTheme.shapes.small.copy(all = CornerSize(15.dp))
+                            )
                         )
                         .clickable(onClick = onSaveClick),
-                    name = targetSnack.name,
-                    image = targetSnack.image
+                    name = targetDessert.name,
+                    image = targetDessert.image
                 )
                 Row(
                     modifier = Modifier
@@ -104,14 +100,14 @@ fun SharedTransitionScope.SnackDetailScreen(
 @Composable
 @Preview(showBackground = true)
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
-private fun SnackDetailScreenPreview() {
-    val snack = FakeDataProvider.getSnacks()[0]
+private fun DessertDetailScreenPreview() {
+    val dessert = FakeDataProvider.getDesserts()[0]
 
     SharedElementTransitionTheme {
         SharedTransitionLayout {
-            SnackDetailScreen(
+            DessertDetailScreen(
                 modifier = Modifier.fillMaxSize(),
-                snack = snack,
+                dessert = dessert,
                 onSaveClick = { /* Handle Click Action */ }
             )
         }
