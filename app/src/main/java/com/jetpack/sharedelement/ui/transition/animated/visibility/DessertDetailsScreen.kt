@@ -3,13 +3,11 @@
 package com.jetpack.sharedelement.ui.transition.animated.visibility
 
 import android.content.res.Configuration
-import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.SharedTransitionScope
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -44,59 +42,52 @@ import com.jetpack.sharedelement.ui.transition.animated.visibility.components.De
 @Composable
 fun SharedTransitionScope.DessertDetailScreen(
     modifier: Modifier = Modifier,
+    animatedVisibilityScope: AnimatedVisibilityScope,
     dessert: Dessert,
     onSaveClick: () -> Unit
 ) {
-    AnimatedContent(
-        modifier = modifier,
-        targetState = dessert,
-        transitionSpec = {
-            fadeIn() togetherWith fadeOut()
-        },
-        label = "DessertEditDetails"
-    ) { targetDessert ->
-        Box(
+    Box(
+        modifier = modifier
+            .background(Color.Black.copy(alpha = 0.5f)),
+        contentAlignment = Alignment.Center
+    ) {
+        Column(
             modifier = Modifier
-                .background(Color.Black.copy(alpha = 0.5f)),
-            contentAlignment = Alignment.Center
-        ) {
-            Column(
-                modifier = Modifier
-                    .padding(horizontal = 16.dp)
-                    .clip(shape = MaterialTheme.shapes.small.copy(all = CornerSize(15.dp)))
-                    .background(
-                        color = MaterialTheme.colors.onPrimary,
-                        shape = MaterialTheme.shapes.small.copy(all = CornerSize(15.dp))
+                .padding(horizontal = 16.dp)
+                .sharedElement(
+                    state = rememberSharedContentState(key = dessert.name),
+                    animatedVisibilityScope = animatedVisibilityScope,
+                    clipInOverlayDuringTransition = OverlayClip(
+                        clipShape = MaterialTheme.shapes.small.copy(all = CornerSize(15.dp))
                     )
-            ) {
-                DesertContents(
-                    modifier = Modifier
-                        .sharedElement(
-                            state = rememberSharedContentState(key = targetDessert.name),
-                            animatedVisibilityScope = this@AnimatedContent,
-                            clipInOverlayDuringTransition = OverlayClip(
-                                clipShape = MaterialTheme.shapes.small.copy(all = CornerSize(15.dp))
-                            )
-                        )
-                        .clickable(onClick = onSaveClick),
-                    name = targetDessert.name,
-                    image = targetDessert.image
                 )
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 8.dp, end = 8.dp),
-                    horizontalArrangement = Arrangement.End
-                ) {
-                    TextButton(onClick = onSaveClick) {
-                        Text(text = stringResource(R.string.save_changes))
-                    }
+                .clip(shape = MaterialTheme.shapes.small.copy(all = CornerSize(15.dp)))
+                .background(
+                    color = MaterialTheme.colors.onPrimary,
+                    shape = MaterialTheme.shapes.small.copy(all = CornerSize(15.dp))
+                )
+        ) {
+            DesertContents(
+                modifier = Modifier
+                    .clickable(onClick = onSaveClick),
+                name = dessert.name,
+                image = dessert.image
+            )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 8.dp, end = 8.dp),
+                horizontalArrangement = Arrangement.End
+            ) {
+                TextButton(onClick = onSaveClick) {
+                    Text(text = stringResource(R.string.save_changes))
                 }
             }
         }
     }
 }
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 @Preview(showBackground = true)
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
@@ -105,11 +96,14 @@ private fun DessertDetailScreenPreview() {
 
     SharedElementTransitionTheme {
         SharedTransitionLayout {
-            DessertDetailScreen(
-                modifier = Modifier.fillMaxSize(),
-                dessert = dessert,
-                onSaveClick = { /* Handle Click Action */ }
-            )
+            AnimatedVisibility(true) {
+                DessertDetailScreen(
+                    modifier = Modifier.fillMaxSize(),
+                    dessert = dessert,
+                    animatedVisibilityScope = this,
+                    onSaveClick = { /* Handle Click Action */ }
+                )
+            }
         }
     }
 }

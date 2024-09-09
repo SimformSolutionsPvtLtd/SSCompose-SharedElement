@@ -133,12 +133,12 @@ object FakeDataProvider {
 
     fun getDesserts(): List<Dessert> =
         listOf(
-            Dessert(name = "Cupcake", image = R.drawable.cupcake),
-            Dessert(name = "Donut", image = R.drawable.donut),
-            Dessert(name = "Eclair", image = R.drawable.eclair),
-            Dessert(name = "Froyo", image = R.drawable.froyo),
-            Dessert(name = "Gingerbread", image = R.drawable.gingerbread),
-            Dessert(name = "Honeycomb", image = R.drawable.honeycomb)
+            Dessert(id = 0, name = "Cupcake", image = R.drawable.cupcake),
+            Dessert(id = 1, name = "Donut", image = R.drawable.donut),
+            Dessert(id = 2, name = "Eclair", image = R.drawable.eclair),
+            Dessert(id = 3, name = "Froyo", image = R.drawable.froyo),
+            Dessert(id = 4, name = "Gingerbread", image = R.drawable.gingerbread),
+            Dessert(id = 5, name = "Honeycomb", image = R.drawable.honeycomb)
         )
 
     fun getFabProfiles(): List<Profile> {
