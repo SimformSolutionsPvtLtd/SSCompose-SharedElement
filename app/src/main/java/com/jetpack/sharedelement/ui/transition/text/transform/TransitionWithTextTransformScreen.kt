@@ -116,6 +116,7 @@ private fun MainContent(
                         .fillMaxWidth()
                         .then(roundedBoxModifier)
                         .then(sharedBoundsModifier)
+                        .padding(10.dp)
                         .clickable(onClick = onShowDetails),
                     animatedVisibilityScope = this@AnimatedContent
                 )
@@ -124,6 +125,7 @@ private fun MainContent(
                     modifier = Modifier
                         .then(roundedBoxModifier)
                         .then(sharedBoundsModifier)
+                        .padding(10.dp)
                         .clickable(onClick = onBack),
                     animatedVisibilityScope = this@AnimatedContent,
                 )

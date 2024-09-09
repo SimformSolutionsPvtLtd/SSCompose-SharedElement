@@ -8,6 +8,8 @@ import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -24,6 +26,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -65,6 +69,13 @@ fun SharedTransitionScope.FabDetailsContent(
                 .width(160.dp)
                 .clip(MaterialTheme.shapes.small.copy(all = CornerSize(20.dp)))
                 .background(Color.LightGray.copy(alpha = 0.5f))
+                .sharedBounds(
+                    sharedContentState = rememberSharedContentState(key = "card_bounds"),
+                    animatedVisibilityScope = animatedVisibilityScope,
+                    enter = expandVertically(expandFrom = Alignment.Top),
+                    exit = shrinkVertically(shrinkTowards = Alignment.Top),
+                    boundsTransform = fabBoundsTransform
+                )
                 .clickable(onClick = onBack)
         ) {
             items(profiles) { profile: Profile ->
@@ -77,18 +88,13 @@ fun SharedTransitionScope.FabDetailsContent(
             }
             item {
                 ProfileFooter(
+                    animatedVisibilityScope = animatedVisibilityScope,
                     modifier = Modifier
+                        .clip(RoundedCornerShape(20.dp))
                         .fillMaxWidth()
                         .height(80.dp)
                         .background(Color.Cyan.copy(0.5f))
                         .clickable(onClick = onBack)
-                        .sharedBounds(
-                            sharedContentState = rememberSharedContentState(key = "card_bounds"),
-                            animatedVisibilityScope = animatedVisibilityScope,
-                            enter = fabEnterAnimation,
-                            exit = fabExitAnimation,
-                            boundsTransform = fabBoundsTransform
-                        )
                 )
             }
         }
@@ -100,7 +106,8 @@ fun SharedTransitionScope.FabDetailsContent(
  * Utilizes shared element transitions for smooth animations.
  */
 @Composable
-private fun ProfileFooter(
+private fun SharedTransitionScope.ProfileFooter(
+    animatedVisibilityScope: AnimatedVisibilityScope,
     modifier: Modifier = Modifier,
 ) {
     Row(
@@ -112,7 +119,13 @@ private fun ProfileFooter(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Image(
-            modifier = Modifier.size(40.dp),
+            modifier = Modifier
+                .size(40.dp)
+                .sharedElement(
+                    state = rememberSharedContentState(key = "card_icon"),
+                    animatedVisibilityScope = animatedVisibilityScope,
+                    boundsTransform = fabBoundsTransform
+                ),
             imageVector = Icons.Filled.Edit,
             contentDescription = "",
             contentScale = ContentScale.Crop
@@ -181,9 +194,7 @@ private fun FabDetailsContentPreview() {
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 private fun ProfileHeaderPreview() {
     SharedElementTransitionTheme {
-        ProfileFooter(
-            modifier = Modifier.fillMaxWidth()
-        )
+//
     }
 }
 

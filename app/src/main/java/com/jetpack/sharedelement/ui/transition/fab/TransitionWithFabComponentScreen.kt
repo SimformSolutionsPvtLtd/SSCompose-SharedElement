@@ -6,8 +6,6 @@ import android.content.res.Configuration
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
@@ -93,20 +91,9 @@ private fun MainContent(
             if (!targetState) {
                 FabMainContent(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .sharedBounds(
-                            sharedContentState = rememberSharedContentState(key = "bounds"),
-                            animatedVisibilityScope = this@AnimatedContent,
-                            enter = fabEnterAnimation,
-                            exit = fabExitAnimation,
-                            boundsTransform = fabBoundsTransform
-                        )
-                        .clickable(
-                            interactionSource = remember { MutableInteractionSource() },
-                            indication = null,
-                            onClick = onShowDetails
-                        ),
-                    animatedVisibilityScope = this@AnimatedContent
+                        .fillMaxSize(),
+                    animatedVisibilityScope = this@AnimatedContent,
+                    onShowDetails = onShowDetails
                 )
             } else {
                 FabDetailsContent(

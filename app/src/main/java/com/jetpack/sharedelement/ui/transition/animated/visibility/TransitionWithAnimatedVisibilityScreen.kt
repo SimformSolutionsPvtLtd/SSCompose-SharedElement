@@ -5,13 +5,9 @@ package com.jetpack.sharedelement.ui.transition.animated.visibility
 import android.content.res.Configuration
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
-import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
@@ -20,16 +16,18 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.jetpack.sharedelement.R
 import com.jetpack.sharedelement.data.FakeDataProvider
 import com.jetpack.sharedelement.model.Dessert
@@ -43,8 +41,8 @@ fun TransitionWithAnimatedVisibilityScreen(
     modifier: Modifier = Modifier,
     onBack: () -> Unit
 ) {
-    var selectedDessert by remember { mutableStateOf<Dessert?>(null) }
     val desserts = remember(Unit) { FakeDataProvider.getDesserts() }
+    val navController = rememberNavController()
 
     Scaffold(
         modifier = modifier,
@@ -62,15 +60,10 @@ fun TransitionWithAnimatedVisibilityScreen(
         }
     ) { paddingValues ->
         MainContent(
-            modifier = Modifier.padding(paddingValues),
-            desserts = desserts,
-            selectedDessert = selectedDessert,
-            onSelectedDessert = { dessert ->
-                selectedDessert = dessert
-            },
-            onSaveClick = {
-                selectedDessert = null
-            }
+            modifier = Modifier
+                .padding(paddingValues),
+            navController = navController,
+            desserts = desserts
         )
     }
 }
@@ -79,43 +72,53 @@ fun TransitionWithAnimatedVisibilityScreen(
  * Composable function for displaying a list of desserts with shared element transitions.
  * Applies animations and blur effect when a dessert is selected.
  */
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 private fun MainContent(
     modifier: Modifier = Modifier,
-    desserts: List<Dessert>,
-    selectedDessert: Dessert?,
-    onSelectedDessert: (Dessert) -> Unit,
-    onSaveClick: () -> Unit
+    navController: NavHostController,
+    desserts: List<Dessert>
 ) {
     SharedTransitionLayout(
         modifier = modifier
     ) {
-        LazyColumn(
-            modifier = Modifier
-                .background(Color.LightGray.copy(alpha = 0.5f))
-                .then(if (selectedDessert != null) Modifier.blur(10.dp) else Modifier)
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+        NavHost(
+            navController = navController,
+            startDestination = Screen.DessertsScreen.route
         ) {
-            itemsIndexed(desserts) { _, dessert ->
-                DessertItem(
-                    modifier = Modifier.animateContentSize(),
-                    dessert = dessert,
-                    visible = selectedDessert != dessert,
-                    onClick = {
-                        if (selectedDessert == null) {
-                            onSelectedDessert(dessert)
-                        }
+            composable(route = Screen.DessertsScreen.route) {
+                DessertsScreen(
+                    modifier = Modifier
+                        .background(Color.LightGray.copy(alpha = 0.5f))
+                        .padding(16.dp),
+                    desserts = desserts,
+                    animatedVisibilityScope = this,
+                    sharedTransitionScope = this@SharedTransitionLayout,
+                    onDessertClicked = { dessertId ->
+                        navController.navigate(
+                            Screen.DessertDetailsScreen.createRoute(dessertId)
+                        )
                     }
                 )
             }
-        }
-        if (selectedDessert != null) {
-            DessertDetailScreen(
-                modifier = Modifier.fillMaxSize(),
-                dessert = selectedDessert,
-                onSaveClick = onSaveClick
-            )
+
+            composable(
+                route = Screen.DessertDetailsScreen.route,
+                arguments = listOf(navArgument("desertId") { type = NavType.IntType })
+            ) {
+                val dessertId = it.arguments?.getInt("desertId") ?: -1
+                val dessert = desserts[dessertId]
+
+                DessertDetailScreen(
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    animatedVisibilityScope = this,
+                    dessert = dessert,
+                    onSaveClick = {
+                        navController.navigateUp()
+                    }
+                )
+            }
         }
     }
 }
@@ -127,9 +130,7 @@ private fun MainContentPreview() {
     SharedElementTransitionTheme {
         MainContent(
             desserts = FakeDataProvider.getDesserts(),
-            selectedDessert = null,
-            onSelectedDessert = { /* Handle Click Action */ },
-            onSaveClick = { /* Handle Click Action */ }
+            navController = rememberNavController()
         )
     }
 }

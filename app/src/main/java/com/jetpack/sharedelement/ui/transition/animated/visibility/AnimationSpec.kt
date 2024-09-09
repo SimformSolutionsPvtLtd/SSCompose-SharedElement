@@ -6,7 +6,7 @@ import androidx.compose.animation.BoundsTransform
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.core.tween
 
-private const val ANIMATION_DURATION_IN_MILLIS = 500
+private const val ANIMATION_DURATION_IN_MILLIS = 200
 
 /**
  * BoundsTransform for general shared element transitions
