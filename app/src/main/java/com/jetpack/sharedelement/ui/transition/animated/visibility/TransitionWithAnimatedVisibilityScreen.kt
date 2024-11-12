@@ -5,6 +5,7 @@ package com.jetpack.sharedelement.ui.transition.animated.visibility
 import android.content.res.Configuration
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
@@ -98,15 +99,13 @@ private fun MainContent(
         ) {
             itemsIndexed(desserts) { _, dessert ->
                 DessertItem(
-                    modifier = Modifier.animateItem(
-                        placementSpec = sharedElementTransitionSpec(),
-                        fadeOutSpec = sharedElementTransitionSpec(),
-                        fadeInSpec = sharedElementTransitionSpec()
-                    ),
+                    modifier = Modifier.animateContentSize(),
                     dessert = dessert,
                     visible = selectedDessert != dessert,
                     onClick = {
-                        onSelectedDessert(dessert)
+                        if (selectedDessert == null) {
+                            onSelectedDessert(dessert)
+                        }
                     }
                 )
             }
